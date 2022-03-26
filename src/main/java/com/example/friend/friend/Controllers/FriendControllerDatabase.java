@@ -30,4 +30,10 @@ public class FriendControllerDatabase {
 
         return "Saved" ;
     }
+
+    @RequestMapping("/allFriends")
+    public Iterable<Friend> getAllFriends(){
+        System.out.println(friendRepository.findAll());
+        return friendRepository.findAll();
+    }
 }
