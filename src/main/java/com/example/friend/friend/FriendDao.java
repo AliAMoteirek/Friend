@@ -1,5 +1,7 @@
 package com.example.friend.friend;
 
+import com.example.friend.friend.Models.Friend;
+
 import java.util.ArrayList;
 import java.util.List;
 

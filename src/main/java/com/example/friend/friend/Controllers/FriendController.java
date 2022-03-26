@@ -1,5 +1,8 @@
-package com.example.friend.friend;
+package com.example.friend.friend.Controllers;
 
+import com.example.friend.friend.FriendDao;
+import com.example.friend.friend.Models.Friend;
+import com.example.friend.friend.Response;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -74,12 +77,6 @@ public class FriendController {
     public Response upsertFriend(@RequestBody Friend friend) {
 
         int friendId = -10;
-  /*      for(Friend f : friendList){
-            if(f.getId() == friend.getId()){
-                System.out.println(f.getId());
-                friendId = f.getId();
-            }
-        }*/
         for (int i = 0; i < friendList.size(); i++){
             if (friendList.get(i).getId() == friend.getId()){
                 friendId = i;
