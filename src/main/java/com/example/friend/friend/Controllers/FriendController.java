@@ -1,3 +1,4 @@
+/*
 package com.example.friend.friend.Controllers;
 
 import com.example.friend.friend.FriendDao;
@@ -93,3 +94,4 @@ public class FriendController {
     }
 
 }
+*/
