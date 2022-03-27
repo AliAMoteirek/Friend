@@ -1,97 +1,54 @@
-/*
 package com.example.friend.friend.Controllers;
 
-import com.example.friend.friend.FriendDao;
 import com.example.friend.friend.Models.Friend;
-import com.example.friend.friend.Response;
+import com.example.friend.friend.Service.FriendService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
+@RequestMapping(path="/demo")
 public class FriendController {
 
-    FriendDao friendDAO = new FriendDao();
-    List<Friend> friendList = friendDAO.getAllFriends();
+    private final FriendService friendService;
 
-    @RequestMapping(value = "/friend")
-    public Friend oneFriend() {
-        return new Friend(1, "Yasser", "Stockholm", "7656788872");
+
+    @Autowired
+    public FriendController(FriendService friendService) {
+        this.friendService = friendService;
     }
 
-    @RequestMapping("/friends")
-    public List<Friend> index() {
-        return friendList;
+    @GetMapping("/add")
+    public String addNewFriend(@RequestParam String name,
+                               @RequestParam String email,
+                               @RequestParam String telephoneNumber){
+        return friendService.addNewFriend(name,email,telephoneNumber);
     }
 
-    @RequestMapping("/friend/{id}")
-    public Friend getBookById(@PathVariable int id) {
-        Friend result = new Friend();
-        for (Friend friend : friendList) {
-            if (friend.getId() == id) {
-                result = friend;
-            }
-        }
-        return result;
+    @RequestMapping("/allFriends")
+    public Iterable<Friend> getFriends() {
+        return friendService.getAllFriends();
     }
 
-    @RequestMapping("/friendssHTML")
-    public String getBooksHTML() {
-        StringBuilder result = new StringBuilder("<HTML><HEAD><TITLE>Friends</TITLE></HEAD><BODY><TABLE>");
-        for (Friend friend : friendList) {
-            result.append("<TR><TD>").append(friend.getId()).append("</TD><TD>").append(friend.getName()).append("</TD><TD>").append(friend.getAddress()).append("</TD></TR>");
-        }
-        result.append("</TABLE></HTML>");
-        return result.toString();
+    @GetMapping( "/friend")
+    public Iterable<Friend> getByName(@RequestParam(required = false) String name){
+        return friendService.getAllFriendsByName(name);
     }
 
-    @RequestMapping("/friend/{id}/delete")
-    public Response deleteBookById(@PathVariable("id") int id) {
-        Response response = new Response("Friend deleted", Boolean.FALSE);
-        int indexToRemove = -1;
-
-        for (int i = 0; i < friendList.size(); i++) {
-            if (friendList.get(i).getId() == id) {
-                indexToRemove = i;
-            }
-        }
-        if (indexToRemove != -1) {
-            friendList.remove(indexToRemove);
-            response.setStatus(Boolean.TRUE);
-        }
-
-        return response;
+    @GetMapping( "/getFriendByNumber")
+    public Iterable<Friend> getByNumber(@RequestParam(required = false) String number){
+        return friendService.getAllFriendsByNumber(number);
     }
 
-    @PostMapping("/friend/add")
-    public Response addNewFriend(@RequestBody Friend friend) {
-        System.out.println(friend.getId() + " " + friend.getName() + " " + friend.getAddress() + " " + friend.getTelephoneNumber());
-
-        Response response = new Response("Friend added", Boolean.FALSE);
-        friendList.add(friend);
-        response.setStatus(Boolean.TRUE);
-
-        return response;
+    @GetMapping(value = "/delete/{id}")
+    public String deleteFriend(@PathVariable Long id) {
+        return friendService.deleteFriend(id);
     }
 
-    @PostMapping("/friend/update")
-    public Response upsertFriend(@RequestBody Friend friend) {
-
-        int friendId = -10;
-        for (int i = 0; i < friendList.size(); i++){
-            if (friendList.get(i).getId() == friend.getId()){
-                friendId = i;
-            }
-        }
-
-        if(friendId == -10){
-            friendList.add(friend);
-            return new Response("New Friend added", true);
-        } else{
-            friendList.set(friendId, friend);
-            return new Response("Freind Updated", true);
-        }
+    @PutMapping(path = "/update/{friendId}")
+    public void updateStudent(
+            @PathVariable("friendId") long friendId,
+            @RequestParam(required = false) String telephoneNumber){
+        friendService.updateStudent(friendId, telephoneNumber);
     }
-
 }
-*/
