@@ -19,7 +19,7 @@ public class FriendController {
         this.friendService = friendService;
     }
 
-    @GetMapping("/friend/")
+    @GetMapping("/")
     public String index() {
         return "Welcome to my friend phone list page";
     }
