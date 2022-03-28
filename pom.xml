@@ -14,7 +14,7 @@
     <name>Friend</name>
     <description>Friend</description>
     <properties>
-        <java.version><!--11-->1.8</java.version>
+        <java.version>11<!--1.8--></java.version>
     </properties>
     <dependencies>
         <dependency>
@@ -71,14 +71,14 @@
                     </excludes>
                 </configuration>
             </plugin>
-            <plugin>
+            <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source><!--15-->1.8</source>
-                    <target><!--15-->1.8</target>
+                    <source>&lt;!&ndash;15&ndash;&gt;1.8</source>
+                    <target>&lt;!&ndash;15&ndash;&gt;1.8</target>
                 </configuration>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
 

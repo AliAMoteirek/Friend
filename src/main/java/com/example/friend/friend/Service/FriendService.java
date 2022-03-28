@@ -2,9 +2,9 @@ package com.example.friend.friend.Service;
 
 import com.example.friend.friend.Models.Friend;
 import com.example.friend.friend.Repositories.FriendRepository;
+import com.example.friend.friend.Response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.transaction.Transactional;
@@ -51,7 +51,7 @@ public class FriendService {
         return null;
     }
 
-    public String deleteFriend(@PathVariable Long id) {
+    public String deleteFriend(Long id) {
         boolean exists = friendRepository.existsById(id);
         if(!exists){
             return "Friend with id " + id + " does not exists";
@@ -60,24 +60,46 @@ public class FriendService {
         return "Friend is deleted";
     }
 
-    @Transactional
-    public void updateStudent(@RequestParam long friendId,
-                              @RequestParam String telephoneNumber) {
-        Friend friend = friendRepository.findById(friendId).orElseThrow(() -> new IllegalStateException(
+   /* @Transactional
+    public void updateStudent(long friendId,
+                              String telephoneNumber) {
+        Friend friend = friendRepository.findById(friendId).orElseThrow(() ->
+                new IllegalStateException(
                 "Friend with id " + friendId + " does not exists"
         ));
-        System.out.println("before if");
 
         if(telephoneNumber != null &&
-                telephoneNumber.length() > 0 /*&&
-                !Objects.equals(friend.getTelephoneNumber(), telephoneNumber)*/){
+                telephoneNumber.length() > 0 &&
+                !Objects.equals(friend.getTelephoneNumber(), telephoneNumber)){
             Optional<Friend> friendOptional = friendRepository.getByTelephoneNumber(telephoneNumber);
-            System.out.println("Inside first if");
             if(friendOptional.isPresent()){
-                System.out.println("inside second if");
                 throw new IllegalStateException("Phone Number taken");
             }
             friend.setTelephoneNumber(telephoneNumber);
         }
+    }*/
+
+    @Transactional
+    public Response updateStudent(Long friendId, Friend friendInput) {
+        Friend friend = friendRepository.findById(friendId).orElse(null);
+
+        if(friend == null){
+            return new Response("Friend with id " + friendId + " does not exists", false);
+        }
+
+        if(friendInput.getTelephoneNumber() != null &&
+                friendInput.getTelephoneNumber().length() > 0 &&
+                !Objects.equals(friend.getTelephoneNumber(), friendInput.getTelephoneNumber())){
+
+            Optional<Friend> friendOptional = friendRepository.getByTelephoneNumber(friendInput.getTelephoneNumber());
+
+            if(friendOptional.isPresent()){
+                return new Response("Phone Number: " + friendInput.getTelephoneNumber()
+                        + " is already taken", false);
+            }
+            friend.setTelephoneNumber(friendInput.getTelephoneNumber());
+        }
+        return new Response(friendInput.getName() + "'s phone number is updated to " +
+                friendInput.getTelephoneNumber() , true);
     }
 }
