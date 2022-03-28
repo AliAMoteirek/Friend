@@ -15,7 +15,7 @@ public class FriendApplication {
     }
 
     @Bean
-    public CommandLineRunner demo(FriendRepository repository) {
+    public CommandLineRunner friend(FriendRepository repository) {
         return (args) -> {
             // save a new friends
             repository.save(new Friend("Hassan Hamid", "hassan@gmail.com", "7634234356"));
