@@ -22,9 +22,9 @@ public class FriendService {
         this.friendRepository = friendRepository;
     }
 
-    public String addNewFriend(@RequestParam String name,
-                               @RequestParam String email,
-                               @RequestParam String telephoneNumber){
+    public String addNewFriend(String name,
+                               String email,
+                               String telephoneNumber){
         Friend friend = new Friend(name, email, telephoneNumber);
 
         friendRepository.save(friend);
