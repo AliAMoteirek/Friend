@@ -13,15 +13,9 @@ public class FriendController {
 
     private final FriendService friendService;
 
-
     @Autowired
     public FriendController(FriendService friendService) {
         this.friendService = friendService;
-    }
-
-    @GetMapping("/")
-    public String index() {
-        return "Welcome to my friend phone list page";
     }
 
     @GetMapping("/add")
