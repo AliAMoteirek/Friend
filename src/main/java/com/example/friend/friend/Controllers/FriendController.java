@@ -24,29 +24,29 @@ public class FriendController {
         return "Welcome to my friend phone list page";
     }
 
-    @GetMapping("freind/add")
+    @GetMapping("/freind/add")
     public String addNewFriend(@RequestParam String name,
                                @RequestParam String email,
                                @RequestParam String telephoneNumber){
         return friendService.addNewFriend(name,email,telephoneNumber);
     }
 
-    @RequestMapping("friend/allfriends")
+    @RequestMapping("/friend/allfriends")
     public Iterable<Friend> getFriends() {
         return friendService.getAllFriends();
     }
 
-    @GetMapping( "friend/friend")
+    @GetMapping( "/friend/friend")
     public Iterable<Friend> getByName(@RequestParam(required = false) String name){
         return friendService.getAllFriendsByName(name);
     }
 
-    @GetMapping( "friend/getfriendbynumber")
+    @GetMapping( "/friend/getfriendbynumber")
     public Iterable<Friend> getByNumber(@RequestParam(required = false) String number){
         return friendService.getAllFriendsByNumber(number);
     }
 
-    @GetMapping(value = "friend/delete/{id}")
+    @GetMapping(value = "/friend/delete/{id}")
     public String deleteFriend(@PathVariable Long id) {
         return friendService.deleteFriend(id);
     }
@@ -58,7 +58,7 @@ public class FriendController {
         friendService.updateStudent(friendId, telephoneNumber);
     }*/
 
-    @PutMapping(path = "friend/update/{friendId}")
+    @PutMapping(path = "/friend/update/{friendId}")
     public Response updateStudent(@PathVariable Long friendId,
                                   @RequestBody Friend friend){
         return friendService.updateStudent(friendId, friend);
