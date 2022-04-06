@@ -18,6 +18,7 @@ public class FriendApplication {
     public CommandLineRunner friend(FriendRepository repository) {
         return (args) -> {
             // save a new friends
+            repository.deleteAll();
             repository.save(new Friend("Hassan Hamid", "hassan@gmail.com", "7634234356"));
             repository.save(new Friend("Emil Eyre", "emil@gmail.com", "703736464634"));
             repository.save(new Friend("Jason Da", "jason@gmail.com", "7634739284"));
